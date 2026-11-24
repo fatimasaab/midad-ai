@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+storage/
+*.db
+.pytest_cache/
+
+# Development backups
+*.bak
+*.pre-*
+*.tmp
+
+# Local media and exports
+*.mp4
+*.mov
+*.aiff
+*.mp3
+*.wav
+*.m4a
+*.zip

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Midad — Human-centered AI editorial studio.">
+    <title>Midad — Editorial Studio</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-mark" lang="ar">مداد</div>
+            <div class="brand-name">MIDAD</div>
+            <div class="brand-subtitle">EDITORIAL STUDIO</div>
+        </div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <nav class="navigation">
+            <a href="#overview" class="nav-item active">
+                <span>◈</span> Overview
+            </a>
+            <a href="#import" class="nav-item">
+                <span>↑</span> Import media
+            </a>
+            <a href="#transcript" class="nav-item">
+                <span>≡</span> Transcript
+            </a>
+            <a href="#clips" class="nav-item">
+                <span>✧</span> AI suggestions
+            </a>
+            <a href="#review" class="nav-item">
+                <span>✓</span> Editorial review
+            </a>
+            <a href="#exports" class="nav-item">
+                <span>↓</span> Exports
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="engine-status">
+                <span class="status-dot"></span>
+                Local AI workspace
+            </div>
+            <p>Whisper · Qwen · FFmpeg</p>
+            <div class="version">MIDAD / V0.6.0</div>
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <div class="eyebrow">CREATIVE TECHNOLOGY</div>
+                <h1>Editorial workspace</h1>
+                <p>From meaningful knowledge to meaningful content.</p>
+            </div>
+
+            <div class="privacy-badge">
+                Local processing
+            </div>
+        </header>
+
+        <section id="overview">
+
+            <div class="section-heading">
+                <h2>Project overview</h2>
+                <span id="project-status" class="status-badge">
+                    No active project
+                </span>
+            </div>
+
+            <div class="stats-grid">
+
+                <article class="stat-card">
+                    <span class="stat-label">Media duration</span>
+                    <strong id="media-duration">—</strong>
+                    <small>Source recording</small>
+                </article>
+
+                <article class="stat-card">
+                    <span class="stat-label">Transcription</span>
+                    <strong id="transcription-time">—</strong>
+                    <small>Processing time</small>
+                </article>
+
+                <article class="stat-card">
+                    <span class="stat-label">AI analysis</span>
+                    <strong id="analysis-time">—</strong>
+                    <small>Processing time</small>
+                </article>
+
+                <article class="stat-card">
+                    <span class="stat-label">Suggested clips</span>
+                    <strong id="clip-count">—</strong>
+                    <small>Editorial candidates</small>
+                </article>
+
+            </div>
+
+        </section>
+
+        <section id="import" class="panel">
+
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">01 / SOURCE MATERIAL</div>
+                    <h2>Import media</h2>
+                </div>
+            </div>
+
+            <div id="drop-zone" class="drop-zone">
+                <div class="upload-icon">↑</div>
+                <h3>Bring your content into Midad</h3>
+                <p>Drag and drop an audio or video recording.</p>
+
+                <input
+                    type="file"
+                    id="file-input"
+                    accept=".mp4,.mov,.mkv,.webm,.mp3,.wav,.m4a,.aiff"
+                    hidden
+                >
+
+                <button id="browse-button" class="button primary">
+                    Browse files
+                </button>
+
+                <small>Audio and video · Maximum 500 MB</small>
+            </div>
+
+            <div class="project-loader">
+                <label for="project-id-input">
+                    Resume an existing project
+                </label>
+
+                <div class="input-row">
+                    <input
+                        id="project-id-input"
+                        type="text"
+                        placeholder="Enter project ID"
+                    >
+                    <button id="load-project" class="button secondary">
+                        Load project
+                    </button>
+                </div>
+            </div>
+
+            <div id="activity-message" role="status">
+                Ready to import media.
+            </div>
+
+        </section>
+
+        <div class="workspace-grid">
+
+            <section class="panel media-panel">
+
+                <div class="section-heading">
+                    <div>
+                        <div class="eyebrow">02 / MEDIA</div>
+                        <h2>Source preview</h2>
+                    </div>
+                </div>
+
+                <div id="media-container" class="media-container">
+
+                    <div id="media-placeholder">
+                        <div class="play-icon">▷</div>
+                        <p>No media loaded</p>
+                    </div>
+
+                    <video
+                        id="video-player"
+                        controls
+                        playsinline
+                        preload="metadata"
+                        hidden
+                    ></video>
+
+                    <audio
+                        id="audio-player"
+                        controls
+                        preload="metadata"
+                        hidden
+                    ></audio>
+
+                </div>
+
+                <div class="timeline">
+                    <input
+                        type="range"
+                        id="timeline-slider"
+                        min="0"
+                        max="100"
+                        value="0"
+                        step="0.1"
+                        aria-label="Media playback position"
+                        disabled
+                    >
+                    <div class="timeline-labels">
+                        <span id="current-time">00:00</span>
+                        <span id="total-time">00:00</span>
+                    </div>
+                </div>
+
+                <div class="transcription-mode">
+                    <label for="transcription-mode">
+                        Transcription mode
+                    </label>
+
+                    <select id="transcription-mode">
+                        <option value="accurate" selected>
+                            High accuracy — Whisper Large V3
+                        </option>
+                        <option value="fast">
+                            Fast draft — Whisper Small
+                        </option>
+                    </select>
+
+                    <p class="mode-hint">
+                        High accuracy is recommended for multilingual
+                        lectures and Islamic terminology.
+                    </p>
+                </div>
+
+                <button
+                    id="transcribe-button"
+                    class="button primary full-width"
+                    disabled
+                >
+                    Generate transcript
+                </button>
+
+            </section>
+
+            <section id="transcript" class="panel transcript-panel">
+
+                <div class="section-heading">
+                    <div>
+                        <div class="eyebrow">03 / TRANSCRIPTION</div>
+                        <h2>Source transcript</h2>
+                    </div>
+                    <span id="language-label" class="status-badge">
+                        —
+                    </span>
+                </div>
+
+                <div class="transcript-legend">
+                    <span class="legend-dot"></span>
+                    Low-confidence words require verification
+                </div>
+
+                <div id="transcript-content" class="transcript-content">
+                    <div class="empty-state">
+                        Your timestamped transcript will appear here.
+                    </div>
+                </div>
+
+                <button
+                    id="analyze-button"
+                    class="button primary full-width"
+                    disabled
+                >
+                    Generate AI suggestions
+                </button>
+
+            </section>
+
+        </div>
+
+        <section id="clips" class="panel">
+
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">04 / EDITORIAL INTELLIGENCE</div>
+                    <h2>Suggested clips</h2>
+                    <p>Source-grounded recommendations for human review.</p>
+                </div>
+                <span class="ai-label">QWEN 2.5</span>
+            </div>
+
+            <div id="clip-list" class="clip-grid">
+                <div class="empty-state">
+                    Generate editorial analysis to discover suggested clips.
+                </div>
+            </div>
+
+        </section>
+
+        <section id="review" class="panel">
+
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">05 / RESPONSIBLE AI</div>
+                    <h2>Editorial review</h2>
+                </div>
+            </div>
+
+            <div class="review-notice">
+                <strong>Human judgment comes first.</strong>
+                <p>
+                    AI suggestions are not scholarly verification.
+                    Review source accuracy, context and religious
+                    references before approving content.
+                </p>
+            </div>
+
+            <div id="review-flags">
+                <div class="empty-state">
+                    Review flags will appear after AI analysis.
+                </div>
+            </div>
+
+            <div id="review-history"></div>
+
+        </section>
+
+        <section id="exports" class="panel">
+
+            <div class="section-heading">
+                <div>
+                    <div class="eyebrow">06 / DELIVERY</div>
+                    <h2>Approved exports</h2>
+                </div>
+            </div>
+
+            <div id="export-list">
+                <div class="empty-state">
+                    Approved clips will appear here.
+                    Complete the required reviews to unlock exports.
+                </div>
+            </div>
+
+        </section>
+
+        <footer>
+            <span>MIDAD — Independent AI editorial prototype</span>
+            <span>Built for thoughtful content creation.</span>
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="/static/js/app.js"></script>
+
+</body>
+</html>
